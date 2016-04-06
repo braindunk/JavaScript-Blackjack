@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Playing Cards Game v1</title>
+	
+	<!-- step 1: load jQuery library -->
+	<script src="jquery-1.12.0.min.js"></script>
+	<!-- step 2: load playing card library files -->
+	<script src="playingCards.js"></script>
+	<script src="playingCards.ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="playingCards.ui.css">
+</head>
+<body>
+	<h2>Playing Cards and Conditionals</h2>
+	
+	<!-- step 3: provide user interface for the game in html -->
+	<div id="controls">
+		<button type="button" onclick="playRound();">Play Blackjack</button>
+	</div>
+	
+	<h4 id="scoreboard">
+	</h4>
+	
+	<h5>Dealer</h5>
+	<div id="cardtray1">
+	</div>
+	
+	<h5 style="clear:both;">Player</h5>
+	<div id="cardtray2">
+	</div>
+	
+	<!-- step 4: create the game (logic and flow) in javascript -->
+	<script>
+		// set up a score to keep track of...
+		var score = 0;
+		
+		// create a virtual deck of playing cards using the github project's code
+		// playingCards() is part of the github project's code we are using
+		var cardDeck = $('#cardtray').playingCards();
+		
+		// shuffle the virtual deck of cards
+		// shuffle() randomizes the order of all cards in the virtual deck
+		cardDeck.shuffle();
+		
+		function playRound() {
+		
+			// the dealer's hand will result in a score for the dealer
+			var dealerScore = drawCards(1);
+		
+			// the dealer's hand will result in a score for the dealer
+			var playerScore = drawCards(2);
+
+			// display the dealer's score
+			if (playerScore >= dealerScore) {
+				$('#scoreboard').html( 'Player Wins! ' + dealerScore + ' vs. ' + playerScore );
+			} else {
+				$('#scoreboard').html( 'Dealer Wins! ' + dealerScore + ' vs. ' + playerScore );
+			}
+		}
+		
+		// var dealerScore = drawCards(1); for dealer
+		// var playerScore = drawCards(2); for the player
+		function drawCards( player_number ) {
+			var score = 0;
+			var hand = [];
+			// draw 2 cards for the dealer and save them in his hand
+			for (var i = 1; i <= 2; i = i + 1) {
+				// draw the card from the deck
+				var card = cardDeck.draw();
+				console.log(card);
+				
+				// evaluate the score the dealer earns for the current card
+				switch ( card.rank ) {
+					case "A":
+						score = score + 11;
+						break;
+					case "2":
+						score = score + 2;
+						break;
+					case "3":
+						score = score + 3;
+						break;
+					case "4":
+						score = score + 4;
+						break;
+					case "5":
+						score = score + 5;
+						break;
+					case "6":
+						score = score + 6;
+						break;
+					case "7":
+						score = score + 7;
+						break;
+					case "8":
+						score = score + 8;
+						break;
+					case "9":
+						score = score + 9;
+						break;
+					case "10":
+						score = score + 10;
+						break;
+					case "J":
+						score = score + 10;
+						break;
+					case "Q":
+						score = score + 10;
+						break;
+					case "K":
+						score = score + 10;
+						break;
+				}
+				
+				// save the card to our hand array
+				hand.push(card);
+				// render the card into the page
+				var markup = card.getHTML();
+				
+				if (player_number == 1) {
+					$('#cardtray1').append(markup);
+				} else {
+					$('#cardtray2').append(markup);
+				}
+			}
+			return score;
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
