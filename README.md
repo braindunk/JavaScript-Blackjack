@@ -2,7 +2,7 @@
 
 @author Ethan Wilde (braindunk)  
 
-A simple draft Blackjack game consisting only of one round of play.
+A simple Blackjack game with simplest possible control structures in JavaScript.
 
 Uses:
 
